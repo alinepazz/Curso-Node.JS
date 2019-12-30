@@ -56,8 +56,8 @@ setTimeout(() => {
 //RESOLUÇÃO DE PROMISES COM ASYNC/AWAIT
 //1º passo adicionar a palavra async na função -> automaticamente ela retornará uma promise
 
-main() //tenho que chamar antes da função
-async function main() {
+main() //chamamos aqui antes da função
+async function main() { // como criamos a assinatura do métodp, precisamos chama-lo
     try {
         console.time ('medida-promise')  //medir o tempo de execução
         const usuario = await obterUsuario()
