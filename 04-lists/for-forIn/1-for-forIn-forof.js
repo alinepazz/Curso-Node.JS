@@ -16,7 +16,7 @@ try {
 
     //TRABALHANDO COM FORIN
              console.time('forin') 
-        for(let i in result.results) {  // o melhor tempo de resposta foi o FORIN
+        for(let i in result.banana) {  // o melhor tempo de resposta foi o FORIN
             const pessoa = result.results[i]
             names.push(pessoa.name)
         }
