@@ -49,6 +49,19 @@ class Database { //criar dois metods auxiliares para ajudar no processo de obten
         return dadosFiltrados
     }
 
+    async remover(id) { //criando a assinatura
+        if(!id) { //se não mandar id, remover todo mundo da base
+            return  await this.escreverArquivo([]) //escreverArquivo retorna um booleano
+
+        }
+        const dados = await this.obterDadosArquivo()
+        const indice = dados.findIndex(item => item.id === parseInt(id))//procurar item especifico dentro da nossa lista/ findIndex -> consigo passar função dentro dele e me retorna um boleano se existitr
+        if(indice === -1) {
+            throw Error('o usuario informado não existe')
+        } 
+        dados.splice(indice, 1) // remover um unico item
+        return await this.escreverArquivo(dados)
+    }
 }
 
 module.exports = new Database() // importar a instância
