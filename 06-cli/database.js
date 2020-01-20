@@ -45,7 +45,7 @@ class Database { //criar dois metods auxiliares para ajudar no processo de obten
     }
     async listar(id) {
         const dados = await this.obterDadosArquivo() // filtrar as informações -> traz todo mundo
-        const dadosFiltrados = dados.filter(item => (id ? (item.id === id) : true))// porem quero somente o filtro
+        const dadosFiltrados = dados.filter(item => (id? (item.id === id) : true))// porem quero somente o filtro
         return dadosFiltrados
     }
 
@@ -61,6 +61,26 @@ class Database { //criar dois metods auxiliares para ajudar no processo de obten
         } 
         dados.splice(indice, 1) // remover um unico item
         return await this.escreverArquivo(dados)
+    }
+
+    async atualizar(id, modificacoes) {
+        const dados = await this.obterDadosArquivo()
+        const indice = dados.findIndex(item => item.id === parseInt(id))
+        if(indice === -1) {
+            throw Error('O heroi informado não existe!')
+        }
+        const atual = dados[indice]
+        const objetoAtualizar = {
+            ...atual,
+            ...modificacoes
+        }
+        dados.splice(indice, 1) // removendo da lista
+
+        return await this.escreverArquivo([
+            ...dados,
+            objetoAtualizar
+        ])
+        
     }
 }
 

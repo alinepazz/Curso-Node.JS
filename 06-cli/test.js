@@ -10,14 +10,20 @@ const {
 const database = require('./database')
 const DEFAULT_ITEM_CADASTRAR = {
     nome: 'Mulher Maravilha',
-     poder: 'Videncia',
-      id: 1
+    poder: 'Videncia',
+    id: 1
      }
+const DEFAULT_ITEM_ATUALIZAR = {
+    nome: 'Aline Paz',
+    pode: 'Persistência',
+    id: 2
+}
 
 //comi inicializar uma suíte de teste
 describe('Suite de manipulação de Herois', () => {
     before(async() => {
         await database.cadastrar(DEFAULT_ITEM_CADASTRAR)//antes de tudo 
+        await database.cadastrar(DEFAULT_ITEM_ATUALIZAR)//antes de tudo 
     })
 
         it('deve pesquisar um heroi usando arquivos', async () => {
@@ -41,4 +47,18 @@ describe('Suite de manipulação de Herois', () => {
         deepEqual(resultado, expected)// quero que o resultado 
 
     })
+    it('deve atualizar um heroi pelo id', async() => {
+        const expected = {
+            ...DEFAULT_ITEM_ATUALIZAR,
+            nome: 'Batman',
+            poder: 'Dinheiro'
+        }
+        const novoDado = {
+            nome: 'Batman',
+            poder: 'Dinheiro'
+        }
+        await database.atualizar(DEFAULT_ITEM_ATUALIZAR.id, novoDado)
+        const [resultado] = await database.listar(DEFAULT_ITEM_ATUALIZAR.id)
+        deepEqual(resultado, expected)
+    } )
 })
